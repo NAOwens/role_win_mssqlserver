@@ -5,9 +5,9 @@ GO
 CREATE DATABASE [{{ var_db_name }}]
 CONTAINMENT = NONE
 ON  PRIMARY 
-( NAME = N'{{ var_db_name }}', FILENAME = N'E:\SQLData\{{ var_db_name }}.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+( NAME = N'{{ var_db_name }}', FILENAME = N'C:\SQLData\{{ var_db_name }}.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
 LOG ON 
-( NAME = N'{{ var_db_name }}_log', FILENAME = N'F:\SQLLogs\{{ var_db_name }}_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+( NAME = N'{{ var_db_name }}_log', FILENAME = N'C:\SQLLogs\{{ var_db_name }}_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
 WITH CATALOG_COLLATION = DATABASE_DEFAULT
 GO
 
