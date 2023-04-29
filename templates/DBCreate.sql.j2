@@ -1,0 +1,114 @@
+USE [master]
+GO
+
+/****** Object:  Database [{{ var_db_name }}]    Script Date: 6/24/2022 4:40:16 PM ******/
+CREATE DATABASE [{{ var_db_name }}]
+CONTAINMENT = NONE
+ON  PRIMARY 
+( NAME = N'{{ var_db_name }}', FILENAME = N'E:\SQLData\{{ var_db_name }}.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+LOG ON 
+( NAME = N'{{ var_db_name }}_log', FILENAME = N'F:\SQLLogs\{{ var_db_name }}_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [{{ var_db_name }}].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET ANSI_NULL_DEFAULT OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET ANSI_NULLS OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET ANSI_PADDING OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET ANSI_WARNINGS OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET ARITHABORT OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET AUTO_CLOSE OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET AUTO_SHRINK OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET AUTO_UPDATE_STATISTICS ON 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET CURSOR_DEFAULT  GLOBAL 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET NUMERIC_ROUNDABORT OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET QUOTED_IDENTIFIER OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET RECURSIVE_TRIGGERS OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET  DISABLE_BROKER 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET TRUSTWORTHY OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET PARAMETERIZATION SIMPLE 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET HONOR_BROKER_PRIORITY OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET RECOVERY FULL 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET  MULTI_USER 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET PAGE_VERIFY CHECKSUM  
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET DB_CHAINING OFF 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET DELAYED_DURABILITY = DISABLED 
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET QUERY_STORE = OFF
+GO
+
+ALTER DATABASE [{{ var_db_name }}] SET  READ_WRITE 
+GO
