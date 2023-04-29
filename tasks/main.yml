@@ -48,7 +48,7 @@
 
 - name: Run SQL Server Installer command-line
   win_command: "{{ inst_file }} /Q /CONFIGURATIONFILE={{ inst_config_file }} /IACCEPTSQLSERVERLICENSETERMS=True /HP"
-  become_user: na/sesvro01
+#  become_user: domain/user
 
 - name: Create sql script file to create DBATools DB
   win_template:
