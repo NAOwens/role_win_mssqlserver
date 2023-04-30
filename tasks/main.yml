@@ -3,12 +3,13 @@
 
 - name: Ensure user bob is present
   ansible.windows.win_user:
-    name: "{{ item }}"
+#    name: "{{ item }}"
+    name: dbagentuser
     password: 
     state: present
     groups: Administrators
-  loop:
-    - "{{ db_admins }}"
+#  loop:
+#    - "{{ db_admins }}"
 
 #- name: Add domain users to local Admin group - skip
 #  win_group_membership:
