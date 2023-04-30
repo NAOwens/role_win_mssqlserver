@@ -1,54 +1,63 @@
 ---
 # tasks file for role_win_mssqlserver
 
-- name: Add domain users to local Admin group
-  win_group_membership:
-    name: Administrators
-    members: '{{ db_admins }}'
+- name: Ensure user bob is present
+  ansible.windows.win_user:
+    name: "{{ item }}"
+    password: 
     state: present
+    groups: Administrators
+    loop:
+    - "{{ db_admins }}"
 
-- name: Add the SQL engine account to Lock pages in memory
-  win_user_right:
-    name: SeLockMemoryPrivilege
-    users:
-    - '{{ db_engine_user }}'
-    action: add
+#- name: Add domain users to local Admin group - skip
+#  win_group_membership:
+#    name: Administrators
+#    members: '{{ db_admins }}'
+#    state: present
 
-- name: Add the SQL engine account to Perform volume maintenance task
-  win_user_right:
-    name: SeManageVolumePrivilege
-    users:
-    - '{{ db_engine_user }}'
-    action: add
+#- name: Add the SQL engine account to Lock pages in memory
+#  win_user_right:
+#    name: SeLockMemoryPrivilege
+#    users:
+#    - '{{ db_engine_user }}'
+#    action: add
+
+#- name: Add the SQL engine account to Perform volume maintenance task
+#  win_user_right:
+#    name: SeManageVolumePrivilege
+#    users:
+#    - '{{ db_engine_user }}'
+#    action: add
   
-- name: Configure Local DTC
-  win_shell: Set-DtcNetworkSetting -DtcName "Local" -AuthenticationLevel "NoAuth" -InboundTransactionsEnabled $true -OutboundTransactionsEnabled $true -RemoteAdministrationAccessEnabled $true -RemoteClientAccessEnabled $true -XATransactionsEnabled $true -Confirm:$false
+#- name: Configure Local DTC
+#  win_shell: Set-DtcNetworkSetting -DtcName "Local" -AuthenticationLevel "NoAuth" -InboundTransactionsEnabled $true -OutboundTransactionsEnabled $true -RemoteAdministrationAccessEnabled $true -RemoteClientAccessEnabled $true -XATransactionsEnabled $true -Confirm:$false
 
-- name: Create SQL directories
-  win_file:
-    path: "{{ item }}"
-    state: directory
-  loop: '{{ db_dirs }}'
+#- name: Create SQL directories
+#  win_file:
+#    path: "{{ item }}"
+#    state: directory
+#  loop: '{{ db_dirs }}'
 
-- name: Change power play to High Performance
-  win_shell: powercfg.exe /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
+#- name: Change power play to High Performance
+#  win_shell: powercfg.exe /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
 
-- name: Download MS SQL server install file
-  win_get_url:
-    url: '{{ inst_url }}'
-    dest: '{{ inst_file }}'
+#- name: Download MS SQL server install file
+#  win_get_url:
+#    url: '{{ inst_url }}'
+#    dest: '{{ inst_file }}'
 
-- name: Create SQLServerConfig.ini file for silent install
-  win_template:
-    src: '{{ inst_db_type }}.ini.j2'
-    dest: '{{ inst_config_file }}'
+#- name: Create SQLServerConfig.ini file for silent install
+#  win_template:
+#    src: '{{ inst_db_type }}.ini.j2'
+#    dest: '{{ inst_config_file }}'
 
-- name: Temporarily disable UAC - User Account Control
-  win_shell: 'REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v ConsentPromptBehaviorAdmin /t REG_DWORD /d 0 /f'
+#- name: Temporarily disable UAC - User Account Control
+#  win_shell: 'REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v ConsentPromptBehaviorAdmin /t REG_DWORD /d 0 /f'
 
-- name: Run SQL Server Installer command-line
-  win_command: "{{ inst_file }} /Q /CONFIGURATIONFILE={{ inst_config_file }} /IACCEPTSQLSERVERLICENSETERMS=True /HP"
-#  become_user: domain/user
+#- name: Run SQL Server Installer command-line
+#  win_command: "{{ inst_file }} /Q /CONFIGURATIONFILE={{ inst_config_file }} /IACCEPTSQLSERVERLICENSETERMS=True /HP"
+#  become_user: domain/user - skip
 
 #- name: Create sql script file to create DBATools DB
 #  win_template:
@@ -58,17 +67,17 @@
 #- name: Create DBTools DB
 #  win_command: "sqlcmd -U sa -P {{ db_sapwd }} -i {{ inst_dbcreate_file }}"
 
-- name: Re-enable UAC
-  win_shell: 'REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v ConsentPromptBehaviorAdmin /t REG_DWORD /d 5 /f'
+#- name: Re-enable UAC
+#  win_shell: 'REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v ConsentPromptBehaviorAdmin /t REG_DWORD /d 5 /f'
 
-- name: Clean-up by removing config file and install file
-  win_file:
-    path: "{{ item }}"
-    state: absent
-  loop:
-    - '{{ inst_config_file }}'
-    - '{{ inst_file }}'
-    - '{{ inst_dbcreate_file }}'
+#- name: Clean-up by removing config file and install file
+#  win_file:
+#    path: "{{ item }}"
+#    state: absent
+#  loop:
+#    - '{{ inst_config_file }}'
+#    - '{{ inst_file }}'
+#    - '{{ inst_dbcreate_file }}'
 
 #- name: Reboot windows
 #  win_reboot:
