@@ -1,6 +1,12 @@
 ---
 # tasks file for role_win_mssqlserver
 
+- name: Create a dba group
+  ansible.windows.win_group:
+    name: "{{ dba_local_group }}"
+    description: Local DBA Group
+    state: present
+
 - name: Ensure db users are present
   ansible.windows.win_user:
     name: "{{ item }}"
