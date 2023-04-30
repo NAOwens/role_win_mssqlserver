@@ -10,7 +10,7 @@
 - name: Ensure db users are present
   ansible.windows.win_user:
     name: "{{ item }}"
-    password: 
+    password: "{{ db_pw }}"
     state: present
     groups: 
       - Administrators

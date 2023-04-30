@@ -100,7 +100,7 @@ INSTANCEDIR="C:\Program Files\Microsoft SQL Server"
 ; Agent account name 
 
 AGTSVCACCOUNT="{{ db_agent_user }}"
-AGTSVCPASSWORD="{{ db_agent_pw }}"
+AGTSVCPASSWORD="{{ db_pw }}"
 
 ; Auto-start service after installation.  
 
@@ -145,7 +145,7 @@ SQLCOLLATION="SQL_Latin1_General_CP1_CI_AS"
 ; Account for SQL Server service: Domain\User or system account. 
 
 SQLSVCACCOUNT="{{ db_engine_user }}"
-SQLSVCPASSWORD="{{ db_engine_pw }}"
+SQLSVCPASSWORD="{{ db_pw }}"
 
 
 ; Set to "True" to enable instant file initialization for SQL Server service. If enabled, Setup will grant Perform Volume Maintenance Task privilege to the Database Engine Service SID. This may lead to information disclosure as it could allow deleted content to be accessed by an unauthorized principal. 
