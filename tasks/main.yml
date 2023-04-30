@@ -12,7 +12,9 @@
     name: "{{ item }}"
     password: 
     state: present
-    groups: Administrators
+    groups: 
+      - Administrators
+      - "{{ dba_local_group }}"
   loop: "{{ db_admins }}"
 
 #- name: Add domain users to local Admin group - skip
