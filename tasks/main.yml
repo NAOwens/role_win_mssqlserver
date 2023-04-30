@@ -22,12 +22,12 @@
     - '{{ db_engine_user }}'
     action: add
 
-#- name: Add the SQL engine account to Perform volume maintenance task
-#  win_user_right:
-#    name: SeManageVolumePrivilege
-#    users:
-#    - '{{ db_engine_user }}'
-#    action: add
+- name: Add the SQL engine account to Perform volume maintenance task
+  ansible.windows.win_user_right:
+    name: SeManageVolumePrivilege
+    users:
+    - '{{ db_engine_user }}'
+    action: add
   
 #- name: Configure Local DTC
 #  win_shell: Set-DtcNetworkSetting -DtcName "Local" -AuthenticationLevel "NoAuth" -InboundTransactionsEnabled $true -OutboundTransactionsEnabled $true -RemoteAdministrationAccessEnabled $true -RemoteClientAccessEnabled $true -XATransactionsEnabled $true -Confirm:$false
