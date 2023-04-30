@@ -86,5 +86,5 @@
     - '{{ inst_file }}'
     - '{{ inst_dbcreate_file }}'
 
-#- name: Reboot windows
-#  win_reboot:
+- name: Reboot windows
+  ansible.windows.win_reboot:
