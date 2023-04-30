@@ -15,12 +15,12 @@
 #    members: '{{ db_admins }}'
 #    state: present
 
-#- name: Add the SQL engine account to Lock pages in memory
-#  win_user_right:
-#    name: SeLockMemoryPrivilege
-#    users:
-#    - '{{ db_engine_user }}'
-#    action: add
+- name: Add the SQL engine account to Lock pages in memory
+  ansible.windows.win_user_right:
+    name: SeLockMemoryPrivilege
+    users:
+    - '{{ db_engine_user }}'
+    action: add
 
 #- name: Add the SQL engine account to Perform volume maintenance task
 #  win_user_right:
