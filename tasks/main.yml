@@ -29,8 +29,8 @@
     - '{{ db_engine_user }}'
     action: add
   
-#- name: Configure Local DTC
-#  win_shell: Set-DtcNetworkSetting -DtcName "Local" -AuthenticationLevel "NoAuth" -InboundTransactionsEnabled $true -OutboundTransactionsEnabled $true -RemoteAdministrationAccessEnabled $true -RemoteClientAccessEnabled $true -XATransactionsEnabled $true -Confirm:$false
+- name: Configure Local DTC
+  win_shell: Set-DtcNetworkSetting -DtcName "Local" -AuthenticationLevel "NoAuth" -InboundTransactionsEnabled $true -OutboundTransactionsEnabled $true -RemoteAdministrationAccessEnabled $true -RemoteClientAccessEnabled $true -XATransactionsEnabled $true -Confirm:$false
 
 #- name: Create SQL directories
 #  win_file:
