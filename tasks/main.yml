@@ -43,20 +43,20 @@
     src: '{{ inst_db_type }}.ini.j2'
     dest: '{{ inst_config_file }}'
 
-- name: Temporarily disable UAC
+- name: Temporarily disable UAC - User Account Control
   win_shell: 'REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v ConsentPromptBehaviorAdmin /t REG_DWORD /d 0 /f'
 
 - name: Run SQL Server Installer command-line
   win_command: "{{ inst_file }} /Q /CONFIGURATIONFILE={{ inst_config_file }} /IACCEPTSQLSERVERLICENSETERMS=True /HP"
 #  become_user: domain/user
 
-- name: Create sql script file to create DBATools DB
-  win_template:
-    src: 'DBCreate.sql.j2'
-    dest: '{{ inst_dbcreate_file }}'
+#- name: Create sql script file to create DBATools DB
+#  win_template:
+#    src: 'DBCreate.sql.j2'
+#    dest: '{{ inst_dbcreate_file }}'
 
-- name: Create DBTools DB
-  win_command: "sqlcmd -U sa -P {{ db_sapwd }} -i {{ inst_dbcreate_file }}"
+#- name: Create DBTools DB
+#  win_command: "sqlcmd -U sa -P {{ db_sapwd }} -i {{ inst_dbcreate_file }}"
 
 - name: Re-enable UAC
   win_shell: 'REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v ConsentPromptBehaviorAdmin /t REG_DWORD /d 5 /f'
@@ -70,5 +70,5 @@
     - '{{ inst_file }}'
     - '{{ inst_dbcreate_file }}'
 
-- name: Reboot windows
-  win_reboot:
+#- name: Reboot windows
+#  win_reboot:
