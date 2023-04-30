@@ -8,7 +8,7 @@
     state: present
     groups: Administrators
     loop:
-    - "{{ db_admins }}"
+      - "{{ db_admins }}"
 
 #- name: Add domain users to local Admin group - skip
 #  win_group_membership:
