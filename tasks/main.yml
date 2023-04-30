@@ -46,7 +46,7 @@
     url: '{{ inst_url }}'
     dest: '{{ inst_file }}'
 
-- name: Create SQLServerConfig.ini file for silent install
+- name: Create SQLServer.ini file for silent install
   ansible.windows.win_template:
     src: '{{ inst_db_type }}.ini.j2'
     dest: '{{ inst_config_file }}'
