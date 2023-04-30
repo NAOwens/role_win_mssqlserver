@@ -1,15 +1,13 @@
 ---
 # tasks file for role_win_mssqlserver
 
-- name: Ensure user bob is present
+- name: Ensure db users are present
   ansible.windows.win_user:
-#    name: "{{ item }}"
-    name: dbagentuser
+    name: "{{ item }}"
     password: 
     state: present
     groups: Administrators
-#  loop:
-#    - "{{ db_admins }}"
+  loop: "{{ db_admins }}"
 
 #- name: Add domain users to local Admin group - skip
 #  win_group_membership:
