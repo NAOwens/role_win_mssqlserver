@@ -84,7 +84,7 @@
   loop:
     - '{{ inst_config_file }}'
     - '{{ inst_file }}'
-    - '{{ inst_dbcreate_file }}'
+#    - '{{ inst_dbcreate_file }}'
 
 - name: Reboot windows
   ansible.windows.win_reboot:
