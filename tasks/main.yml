@@ -7,7 +7,7 @@
     description: Local DBA Group
     state: present
 
-- name: Ensure db users are present
+- name: Create db users 
   ansible.windows.win_user:
     name: "{{ item }}"
     password: "{{ db_pw }}"
@@ -64,15 +64,6 @@
 
 - name: Run SQL Server Installer command-line
   ansible.windows.win_command: "{{ inst_file }} /Q /CONFIGURATIONFILE={{ inst_config_file }} /IACCEPTSQLSERVERLICENSETERMS=True /HP"
-  become_user: domain/user - skip
-
-#- name: Create sql script file to create DBATools DB
-#  win_template:
-#    src: 'DBCreate.sql.j2'
-#    dest: '{{ inst_dbcreate_file }}'
-
-#- name: Create DBTools DB
-#  win_command: "sqlcmd -U sa -P {{ db_sapwd }} -i {{ inst_dbcreate_file }}"
 
 - name: Re-enable UAC
   ansible.windows.win_shell: 'REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v ConsentPromptBehaviorAdmin /t REG_DWORD /d 5 /f'
@@ -84,7 +75,6 @@
   loop:
     - '{{ inst_config_file }}'
     - '{{ inst_file }}'
-#    - '{{ inst_dbcreate_file }}'
 
 - name: Reboot windows
   ansible.windows.win_reboot:
