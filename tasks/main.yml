@@ -49,10 +49,10 @@
 - name: Change power play to High Performance
   ansible.windows.win_shell: powercfg.exe /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
 
-- name: Download MS SQL server install file
-  ansible.windows.win_get_url:
-    url: '{{ inst_url }}'
-    dest: '{{ inst_file }}'
+#- name: Download MS SQL server install file
+#  ansible.windows.win_get_url:
+#    url: '{{ inst_url }}'
+#    dest: '{{ inst_file }}'
 
 - name: Create SQLServer.ini file for silent install
   ansible.windows.win_template:
