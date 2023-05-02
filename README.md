@@ -1,29 +1,56 @@
-role_win_mssqlserver Name
+role_win_mssqlserver 
 =========
 
-A brief description of the role_win_mssqlserver role goes here.
+This role uses a template to build a file with the information needed to install MS SQL Server on Windows. The template file is placed on the server as SQLServer.ini and that file is used by the SQL Server install file to install SQL Server.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role_win_mssqlserver role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Template file - SQLServer.ini.j2
 
 Role Variables
 --------------
 
-A description of the settable variables for this role_win_mssqlserver role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
 Example Playbook
 ----------------
+- name: Create a dba group
+  ansible.windows.win_group:
+    name: "{{ dba_local_group }}"
+    description: Local DBA Group
+    state: present
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+- name: Create db users 
+  ansible.windows.win_user:
+    name: "{{ item }}"
+    password: "{{ db_pw }}"
+    state: present
+    groups: 
+      - Administrators
+      - "{{ dba_local_group }}"
+  loop: "{{ db_admins }}"
 
-  # add example of the role_win_mssqlserver role here
+- name: Add domain users to local Admin group - skip
+  win_group_membership:
+    name: Administrators
+    members: '{{ db_admins }}'
+    state: present
+
+- name: Add the SQL engine account to Lock pages in memory
+  ansible.windows.win_user_right:
+    name: SeLockMemoryPrivilege
+    users:
+    - '{{ db_engine_user }}'
+    action: add
+
+- name: Add the SQL engine account to Perform volume maintenance task
+  ansible.windows.win_user_right:
+    name: SeManageVolumePrivilege
+    users:
+    - '{{ db_engine_user }}'
+    action: add
 
 License
 -------
@@ -33,4 +60,5 @@ GPL
 Author Information
 ------------------
 
-An optional section for the role_win_mssqlserver role authors to include contact information, or a website (HTML is not allowed).
+Norman Owens
+Norman.Owens@redhat.com
