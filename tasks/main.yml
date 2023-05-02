@@ -46,7 +46,7 @@
     state: directory
   loop: '{{ db_dirs }}'
 
-- name: Change power play to High Performance
+- name: Change power plan to High Performance
   ansible.windows.win_shell: powercfg.exe /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
 
 #- name: Download MS SQL server install file
